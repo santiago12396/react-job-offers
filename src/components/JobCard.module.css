@@ -1,0 +1,13 @@
+.jobCard {
+    border: 1px solid rgba(255, 255, 255, .3);
+    border-radius: 4px;
+    padding: 20px;
+
+    display: flex;
+    align-items: start;
+    gap: 10px;
+}
+
+.jobCardInfo {
+    flex: 1;
+}
