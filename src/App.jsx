@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Header } from './components/Header'
 import { JobList } from './components/JobList'
 import { Pagination } from './components/Pagination'
+import { SearchForm } from './components/SearchForm'
 
 import jobOffers from './data.json'
 
@@ -11,22 +12,52 @@ const ITEMS_PER_PAGE = 5;
 
 function App() {
 
+  const [filters, setfilters] = useState({
+    search: '',
+    technology: '',
+    location: '',
+    experienceLevel: ''
+  });
+
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(jobOffers.length / ITEMS_PER_PAGE);
+  const jobsFilteredByFilters = jobOffers.filter(jobOffer => {
+    return (
+      jobOffer.titulo
+        .toLowerCase()
+        .includes(filters.search.toLowerCase()) &&
 
-  const pagedResults = jobOffers.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+      (!filters.technology ||
+        jobOffer.data.technology.toLowerCase() === filters.technology.toLowerCase()) &&
+  
+      (!filters.location ||
+        jobOffer.ubicacion.toLowerCase() === filters.location.toLowerCase()) &&
+  
+      (!filters.experienceLevel ||
+        jobOffer.data.nivel.toLowerCase() === filters.experienceLevel.toLowerCase())
+    );
+  });
 
-  const handlePageChange = value => {
-    setCurrentPage(value);
+  const totalPages = Math.ceil(jobsFilteredByFilters.length / ITEMS_PER_PAGE);
+
+  const pagedResults = jobsFilteredByFilters.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+
+  const handlePageChange = page => {
+    setCurrentPage(page);
+  }
+
+  const handleSearchChange = filters => {
+    setfilters(filters);
+    setCurrentPage(1);
   }
 
   return (
     <>
       <Header />
 
+      <SearchForm onSearch={handleSearchChange} />
+
       <main>
-        <h1 className={`text-center ${styles.title}`}>Ofertas de trabajo!</h1>
         <section className={styles.jobSection} >
             <JobList jobOffers={pagedResults} />
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
