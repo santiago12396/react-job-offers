@@ -1,38 +1,81 @@
-import { useId } from 'react'
+import { useId, useRef, useState } from 'react'
 import styles from './SearchForm.module.css'
 
-export const SearchForm = ({ onSearch }) => {
+
+const Filters = Object.freeze({
+    Technology: Symbol('technology'),
+    Location: Symbol('location'),
+    ExperienceLevel: Symbol('experienceLevel')
+});
+
+export const SearchForm = ({ onSearch, onSearchTerm }) => {
+
+    const [isFocused, setIsFocused] = useState(false);
+
+    const formRef = useRef(null);
 
     const searchId = useId();
     const technologyId = useId();
     const locationId = useId();
     const experienceLevelId = useId();
 
-    const handleSubmit = event => {
-        event.preventDefault();
+    // const handleSubmit = event => {
+    //     event.preventDefault();
 
-        const formData = new FormData(event.target);
+    //     const formData = new FormData(event.target);
+
+    //     const filters = {
+    //         search: formData.get(searchId),
+    //         technology: formData.get(technologyId),
+    //         location: formData.get(locationId),
+    //         experienceLevel: formData.get(experienceLevelId),
+    //     }
+
+    //     console.log({filters})
+
+    //     onSearch(filters);
+    // }
+
+    const handleSearchChange = event => {
+        const searchTerm = event.target.value;
+        onSearchTerm(searchTerm);
+    }
+
+    const handleFilterChange = (event, filteredField) => {
+        const fieldValue = event.target.value;
+
+        const formData = new FormData(formRef.current);
 
         const filters = {
-            search: formData.get(searchId),
             technology: formData.get(technologyId),
             location: formData.get(locationId),
             experienceLevel: formData.get(experienceLevelId),
         }
 
-        console.log({filters})
+        const filtersResult = {
+            ...filters,
+            [filteredField.description]: fieldValue
+        }
 
-        onSearch(filters);
+        onSearch(filtersResult);
     }
+
+    const handleOnFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
 
     return (
         <section className={styles.jobsSearch}>
             <h1>Encuentra tu próximo trabajo</h1>
             <p>Explora miles de oportunidades en el sector tecnológico.</p>
 
-            <form onSubmit={handleSubmit} id="empleos-search-form" role="search">
+            <form ref={formRef} onSubmit={event => event.preventDefault()} id="empleos-search-form" role="search">
 
-            <div className={styles.searchBar}>
+            <div className={`${styles.searchBar} ${isFocused ? styles.focused : ''}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
                     className="icon icon-tabler icons-tabler-outline icon-tabler-search">
@@ -43,13 +86,16 @@ export const SearchForm = ({ onSearch }) => {
                 
                 <input
                     name={searchId}
-                    id="empleos-search-input" type="text"
+                    onChange={handleSearchChange}
+                    onFocus={handleOnFocus}
+                    onBlur={handleBlur}
+                    id="empleos-search-input" type="input"
                     placeholder="Buscar trabajos, empresas o habilidades"
                 />
             </div>
 
             <div className={styles.searchFilters}>
-                <select name={technologyId} id="filter-technology">
+                <select onChange={event => handleFilterChange(event, Filters.Technology)} name={technologyId} id="filter-technology">
                     <option value="">Tecnología</option>
                     <optgroup label="Tecnologías populares">
                         <option value="javascript">JavaScript</option>
@@ -67,7 +113,7 @@ export const SearchForm = ({ onSearch }) => {
                     <option value="php">PHP</option>
                 </select>
 
-                <select name={locationId} id="filter-location">
+                <select onChange={event => handleFilterChange(event, Filters.Location)} name={locationId} id="filter-location">
                     <option value="">Ubicación</option>
                     <option value="remoto">Remoto</option>
                     <option value="cdmx">Ciudad de México</option>
@@ -76,7 +122,7 @@ export const SearchForm = ({ onSearch }) => {
                     <option value="barcelona">Barcelona</option>
                 </select>
 
-                <select name={experienceLevelId} id="filter-experience-level">
+                <select onChange={event => handleFilterChange(event, Filters.ExperienceLevel)} name={experienceLevelId} id="filter-experience-level">
                     <option value="">Nivel de experiencia</option>
                     <option value="junior">Junior</option>
                     <option value="mid">Mid-level</option>

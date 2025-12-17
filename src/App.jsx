@@ -12,8 +12,9 @@ const ITEMS_PER_PAGE = 5;
 
 function App() {
 
+  const [searchTerm, setSearchTerm] = useState('');
+
   const [filters, setfilters] = useState({
-    search: '',
     technology: '',
     location: '',
     experienceLevel: ''
@@ -22,10 +23,11 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const jobsFilteredByFilters = jobOffers.filter(jobOffer => {
+
     return (
       jobOffer.titulo
         .toLowerCase()
-        .includes(filters.search.toLowerCase()) &&
+        .includes(searchTerm.toLowerCase()) &&
 
       (!filters.technology ||
         jobOffer.data.technology.toLowerCase() === filters.technology.toLowerCase()) &&
@@ -51,11 +53,16 @@ function App() {
     setCurrentPage(1);
   }
 
+  const handleSearchTerm = searchTerm => {
+    setSearchTerm(searchTerm);
+    setCurrentPage(1);
+  }
+
   return (
     <>
       <Header />
 
-      <SearchForm onSearch={handleSearchChange} />
+      <SearchForm onSearchTerm={handleSearchTerm} onSearch={handleSearchChange} />
 
       <main>
         <section className={styles.jobSection} >

@@ -7,6 +7,8 @@
     padding: 0.5rem;
     border-radius: 0.5rem;
     box-shadow: 0 10px 15px -3px var(--shadow);
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
 
     display: flex;
     align-items: center;
@@ -30,6 +32,10 @@
 
     input::placeholder {
         color: #64748b;
+    }
+
+    &.focused {
+        border-color: #6d28d9;
     }
 }
 
