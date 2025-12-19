@@ -2,6 +2,18 @@
     padding: 30px 50px;
 }
 
+.jobsSearch h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+}
+
+.jobsSearch p {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
 .searchBar {
     background: var(--input-bg);
     padding: 0.5rem;
@@ -34,6 +46,30 @@
         color: #64748b;
     }
 
+    button {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        font-size: 1.25rem;
+        line-height: 1;
+        flex-shrink: 0;
+    }
+
+    button:hover {
+        color: var(--text-primary);
+        transform: scale(1.1);
+    }
+
+    button:active {
+        transform: scale(0.95);
+    }
+
     &.focused {
         border-color: #6d28d9;
     }
@@ -60,15 +96,15 @@
         background-repeat: no-repeat;
         background-position: right 0.5rem center;
         padding-right: 2.5rem;
+    }
 
-        select:hover {
-            background-color: var(--primary-hover);
-            color: white;
-        }
+    select:hover {
+        background-color: var(--primary-hover);
+        color: white;
+    }
 
-        select:focus {
-            outline: 2px solid #1173d4;
-            outline-offset: 2px;
-        }
+    select:focus {
+        outline: 2px solid #1173d4;
+        outline-offset: 2px;
     }
 }

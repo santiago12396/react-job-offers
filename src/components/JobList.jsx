@@ -1,9 +1,10 @@
 import { JobCard } from './JobCard'
+import styles from './JobList.module.css'
 
 export const JobList = ({ jobOffers = [] }) => {
   return (
-    <>
-      <h2 className="text-center">Resultados de búsqueda</h2>
+    <div className={styles.jobList}>
+      <h2 className={styles.jobListTitle}>Resultados de búsqueda</h2>
 
       {jobOffers.length > 0 ? (
         jobOffers.map(jobOffer => (
@@ -13,8 +14,8 @@ export const JobList = ({ jobOffers = [] }) => {
           />
         ))
       ) : (
-        <p className="text-center">No se encontraron resultados</p>
+        <p className={styles.jobListEmpty}>No se encontraron resultados</p>
       )}
-    </>
+    </div>
   );
 };

@@ -19,23 +19,6 @@ export const SearchForm = ({ onSearch, onSearchTerm }) => {
     const locationId = useId();
     const experienceLevelId = useId();
 
-    // const handleSubmit = event => {
-    //     event.preventDefault();
-
-    //     const formData = new FormData(event.target);
-
-    //     const filters = {
-    //         search: formData.get(searchId),
-    //         technology: formData.get(technologyId),
-    //         location: formData.get(locationId),
-    //         experienceLevel: formData.get(experienceLevelId),
-    //     }
-
-    //     console.log({filters})
-
-    //     onSearch(filters);
-    // }
-
     const handleSearchChange = event => {
         const searchTerm = event.target.value;
         onSearchTerm(searchTerm);

@@ -1,13 +1,63 @@
 .jobCard {
     border: 1px solid rgba(255, 255, 255, .3);
-    border-radius: 4px;
-    padding: 20px;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    background-color: var(--card-bg);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
 
     display: flex;
     align-items: start;
-    gap: 10px;
+    gap: 1rem;
 }
 
 .jobCardInfo {
     flex: 1;
+}
+
+.jobCardInfo h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.jobCardInfo small {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    opacity: 0.75;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.jobCardInfo p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.jobCardButton {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--primary-light);
+    color: white;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    align-self: flex-start;
+}
+
+.jobCardButton:hover,
+.jobCardButton:focus {
+    background-color: var(--primary-hover);
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+.jobCardButton:active {
+    transform: scale(0.95);
 }
