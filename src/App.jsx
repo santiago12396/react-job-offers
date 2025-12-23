@@ -1,17 +1,15 @@
-import { useRouter } from './hooks/useRouter'
 import { Header } from './components/Header'
 import { HomePage } from './pages/Home'
 import { SearchPage } from './pages/Search'
+import { Route } from './components/Route';
 
 
 function App() {
-  const { currentPath } = useRouter();
-
   return (
     <>
       <Header />
-      { currentPath === '/' && <HomePage /> }
-      { currentPath === '/search' && <SearchPage /> }
+      <Route path='/' component={HomePage}  />
+      <Route path='/search' component={SearchPage} />
     </>
   )
 }
